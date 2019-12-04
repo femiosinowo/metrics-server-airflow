@@ -1,7 +1,10 @@
-FROM python:3
+FROM centos/python-36-centos7
 
-ADD metric-server.py /
+RUN pip install --upgrade pip \
+        psycopg2-binary \
+        prometheus_client \
+        apache-airflow[postgres]
 
-RUN pip install pystrich airflow
+ADD metric-server.py .
 
-CMD [ "python", "./metric-server.py" ]
+CMD [ "python", "metric-server.py" ]
